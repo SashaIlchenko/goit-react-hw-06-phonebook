@@ -1,21 +1,24 @@
 import PropTypes from 'prop-types';
+import { useDispatch } from "react-redux";
 import { Formik, Field } from 'formik';
 import { Form, FormField, AddBtn } from './ContactForm.styled';
 import { nanoid } from 'nanoid'
+import { add } from 'Redux/ValueSlice';
 
 const initialValues = {
     name: '',
     number: '',
 };
 
-export const ContactForm = ({ onSubmit }) => {
+export const ContactForm = () => {
+    const dispatch = useDispatch();
     return <Formik
         initialValues={initialValues}
         onSubmit={(values, { resetForm }) => {
-            onSubmit({
+            dispatch(add({
                 id: nanoid(),
                 ...values
-            })
+            }))
             resetForm();
         }}
     >
